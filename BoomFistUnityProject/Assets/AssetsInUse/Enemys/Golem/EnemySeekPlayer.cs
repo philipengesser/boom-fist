@@ -16,18 +16,18 @@ public class EnemySeekPlayer : MonoBehaviour
     {
         navMeshAgent = this.GetComponent<NavMeshAgent>();
         myTransform = this.transform;
-        print(navMeshAgent.destination);
-        navMeshAgent.SetDestination(PlayerSingleton.S.PlayerTransform.position);
+        //print(navMeshAgent.destination);
+        //navMeshAgent.SetDestination(PlayerSingleton.S.PlayerTransform.position);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //float distance = Vector3.Distance(myTransform.position, PlayerSingleton.S.PlayerTransform.position);
-        //if (distance  < PlayerDetectionDistance)
-        //{
-        //    navMeshAgent.SetDestination(PlayerSingleton.S.PlayerTransform.position);
-        //}
+        float distance = Vector3.Distance(myTransform.position, PlayerSingleton.S.PlayerTransform.position);
+        if (distance < PlayerDetectionDistance)
+        {
+            navMeshAgent.SetDestination(PlayerSingleton.S.PlayerTransform.position);
+        }
 
         //else
         //{
