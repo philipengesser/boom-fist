@@ -8,6 +8,11 @@ public class PlayerSingleton : MonoBehaviour
 
     [HideInInspector] public Transform PlayerTransform;
 
+    public static Vector3 PlayerPosition{
+        get { return S.PlayerTransform.position; }
+        set { S.PlayerTransform.position = value; }
+    }
+
     private void Awake()
     {
         if (S == null)
