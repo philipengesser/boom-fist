@@ -17,10 +17,11 @@ public class EnemyKnockBackAttack : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             print("Check2");
-            Vector3 LuanchTrajectory = AttackOrigin.position - other.attachedRigidbody.position;
+            Vector3 LuanchTrajectory =  other.attachedRigidbody.position - AttackOrigin.position;
             LuanchTrajectory = new Vector3(LuanchTrajectory.x, LuanchTrajectory.y + UpwardLuachAngle, LuanchTrajectory.z);
             LuanchTrajectory = LuanchTrajectory.normalized;
-            other.attachedRigidbody.AddForce(LuanchTrajectory * KnockBackForce);
+            other.attachedRigidbody.AddForce(LuanchTrajectory * KnockBackForce, ForceMode.VelocityChange);
+            other.GetComponent<BoomFistHP>().HP -= 1;
         }
     }
 }

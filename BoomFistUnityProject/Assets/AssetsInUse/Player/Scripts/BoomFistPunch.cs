@@ -11,6 +11,7 @@ public class BoomFistPunch : MonoBehaviour
     public float Range;
     public float ExplosionForce;
 
+    private BoomFistAmmo boomFistAmmo;
     private vThirdPersonController characterController;
     private Transform myTransform;
     private Rigidbody myRigidbody;
@@ -23,40 +24,29 @@ public class BoomFistPunch : MonoBehaviour
         }
     }
 
-    //private Transform offSetTransform
-    //{
-    //    get
-    //    {
-    //        Transform newTransform = new Transform();
-    //        return myTransform.position
-    //    }
-    //}
-
     private void Start()
     {
         //Cursor.lockState = CursorLockMode.Locked;
         characterController = this.GetComponent<vThirdPersonController>();
         myTransform = this.transform;
         myRigidbody = this.GetComponent<Rigidbody>();
+        boomFistAmmo = this.GetComponent<BoomFistAmmo>();
     }
 
     public void Punch(Vector3 punchTarget)
     {
-
-        
         RaycastHit hit;
         if (Physics.SphereCast(midPoint, .2f, punchTarget, out hit, Range))
         {
-            //characterController._capsuleCollider.material = characterController.slippyPhysics;
             Vector3 trajectory = (midPoint - hit.point).normalized;
             myRigidbody.AddForce(trajectory * ExplosionForce, ForceMode.VelocityChange);
+            boomFistAmmo.Ammo -= 1;
         }
     }
 
     private void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.Mouse1) && boomFistAmmo.Ammo > 0)
         {
             Punch((-myTransform.forward + -myTransform.up).normalized);
         }
