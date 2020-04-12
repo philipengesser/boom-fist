@@ -23,8 +23,7 @@ public class EnemySeekPlayer : MonoBehaviour
         animator = this.GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void LateUpdate()
     {
         if (IsAttacking())
             return;
@@ -35,17 +34,11 @@ public class EnemySeekPlayer : MonoBehaviour
         if (distance < PlayerDetectionDistance)
         {
             navMeshAgent.SetDestination(PlayerSingleton.PlayerPosition);
-        }
+        } 
         else
         {
             navMeshAgent.SetDestination(myTransform.position);
         }
-    }
-
-    private void LateUpdate()
-    {
-        if (IsAttacking())
-            return;
 
         if (navMeshAgent.remainingDistance > navMeshAgent.stoppingDistance)
         {
@@ -55,13 +48,16 @@ public class EnemySeekPlayer : MonoBehaviour
         {
             animator.SetBool("IsWalking", false);
 
-            if (FacingTarget(PlayerSingleton.PlayerPosition) == false)
+            if (distance < PlayerDetectionDistance)
             {
-                FaceTarget(PlayerSingleton.PlayerPosition);
-            }
-            else
-            {
-                AttackIfReady();
+                if (FacingTarget(PlayerSingleton.PlayerPosition) == false)
+                {
+                    FaceTarget(PlayerSingleton.PlayerPosition);
+                }
+                else
+                {
+                    AttackIfReady();
+                }
             }
         }
     }

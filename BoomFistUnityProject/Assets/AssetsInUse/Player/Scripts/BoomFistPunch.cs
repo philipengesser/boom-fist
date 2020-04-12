@@ -41,14 +41,26 @@ public class BoomFistPunch : MonoBehaviour
             Vector3 trajectory = (midPoint - hit.point).normalized;
             myRigidbody.AddForce(trajectory * ExplosionForce, ForceMode.VelocityChange);
             boomFistAmmo.Ammo -= 1;
+
+            if (hit.collider.CompareTag("Enemy"))
+            {
+
+            }
         }
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1) && boomFistAmmo.Ammo > 0)
+        if (boomFistAmmo.Ammo < 0)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             Punch((-myTransform.forward + -myTransform.up).normalized);
+        }
+        else if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Punch((myTransform.forward + (myTransform.up / 2)).normalized);
         }
     }
 }
